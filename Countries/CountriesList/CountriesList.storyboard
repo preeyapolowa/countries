@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,29 +15,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKD-ta-zJn">
-                                <rect key="frame" x="186" y="437.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="iSK-13-OXK">
+                                <rect key="frame" x="16" y="44" width="382" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cqf-hB-Vb5">
+                                <rect key="frame" x="0.0" y="111" width="414" height="751"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="OKD-ta-zJn" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="Jir-uq-8OO"/>
-                            <constraint firstItem="OKD-ta-zJn" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="zzB-iN-Axj"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="cqf-hB-Vb5" secondAttribute="bottom" id="VE0-Gf-ErN"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cqf-hB-Vb5" secondAttribute="trailing" id="jNr-y7-3Sc"/>
+                            <constraint firstAttribute="trailing" secondItem="iSK-13-OXK" secondAttribute="trailing" constant="16" id="kRN-2i-fBg"/>
+                            <constraint firstItem="iSK-13-OXK" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="plQ-pq-csf"/>
+                            <constraint firstItem="cqf-hB-Vb5" firstAttribute="top" secondItem="iSK-13-OXK" secondAttribute="bottom" constant="16" id="tK0-MS-xiu"/>
+                            <constraint firstItem="iSK-13-OXK" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="tlt-U4-YMg"/>
+                            <constraint firstItem="cqf-hB-Vb5" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zbH-sy-SeK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="iSK-13-OXK" id="gRp-4f-Sr1"/>
+                        <outlet property="tableView" destination="cqf-hB-Vb5" id="1pO-aB-6eE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="141" y="125"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
