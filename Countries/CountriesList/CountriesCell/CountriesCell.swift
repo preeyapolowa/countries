@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+struct CountriesCellModel {
+    let country: String
+    let name: String
+    let lat: Double
+    let long: Double
+}
+
 class CountriesCell: UITableViewCell {
     @IBOutlet weak var bgView: UIView!
     
@@ -31,8 +38,10 @@ class CountriesCell: UITableViewCell {
         }
     }
     
-    func updateUI() {
-        if let url = URL(string: "\(urlImage)AU") {
+    func updateUI(model: CountriesCellModel) {
+        titleLabel.text = "\(model.name), \(model.country)"
+        latLongLabel.text = "\(model.lat), \(model.long)"
+        if let url = URL(string: "\(urlImage)\(model.country)") {
             imageLoader.downloadImage(from: url) { image in
                 self.iconImage.image = image
             }

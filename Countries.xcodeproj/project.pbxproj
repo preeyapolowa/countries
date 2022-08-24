@@ -25,7 +25,6 @@
 		C772313328B683F40021F015 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313228B683F40021F015 /* Extension+String.swift */; };
 		C772313528B684310021F015 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313428B684310021F015 /* Extension+UIView.swift */; };
 		C772313728B687580021F015 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313628B687580021F015 /* Extension+UIColor.swift */; };
-		C772313A28B68B7F0021F015 /* RestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313928B68B7F0021F015 /* RestAPI.swift */; };
 		C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313B28B68BE70021F015 /* Extension+UIImageView.swift */; };
 		C772313E28B6A1E90021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
 /* End PBXBuildFile section */
@@ -70,7 +69,6 @@
 		C772313228B683F40021F015 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		C772313428B684310021F015 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		C772313628B687580021F015 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
-		C772313928B68B7F0021F015 /* RestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPI.swift; sourceTree = "<group>"; };
 		C772313B28B68BE70021F015 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		C772313D28B6A1E90021F015 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,7 +121,6 @@
 		C77230EE28B66F600021F015 /* Countries */ = {
 			isa = PBXGroup;
 			children = (
-				C772313828B68B6D0021F015 /* Endpoints */,
 				C772313128B683E40021F015 /* Extensions */,
 				C772311F28B670CC0021F015 /* CountriesList */,
 				C77230EF28B66F600021F015 /* AppDelegate.swift */,
@@ -185,14 +182,6 @@
 				C772313B28B68BE70021F015 /* Extension+UIImageView.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C772313828B68B6D0021F015 /* Endpoints */ = {
-			isa = PBXGroup;
-			children = (
-				C772313928B68B7F0021F015 /* RestAPI.swift */,
-			);
-			path = Endpoints;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,7 +326,6 @@
 				C772313328B683F40021F015 /* Extension+String.swift in Sources */,
 				C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */,
 				C77230F028B66F600021F015 /* AppDelegate.swift in Sources */,
-				C772313A28B68B7F0021F015 /* RestAPI.swift in Sources */,
 				C77230F228B66F600021F015 /* SceneDelegate.swift in Sources */,
 				C772312528B670ED0021F015 /* CountriesListPresenter.swift in Sources */,
 				C772313728B687580021F015 /* Extension+UIColor.swift in Sources */,

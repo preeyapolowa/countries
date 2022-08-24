@@ -10,6 +10,34 @@ struct CountriesListModels {
         struct Response { }
         struct ViewModel { }
     }
+    
+    enum SearchCountry {
+        struct Request {
+            let keyword: String
+        }
+        struct Response {
+            let isTextEmpty: Bool
+            let hasSearchResult: Bool
+            let searchList: [Countries]
+            
+            init(isTextEmpty: Bool = false,
+                 hasSearchResult: Bool,
+                 searchList: [Countries]) {
+                self.isTextEmpty = isTextEmpty
+                self.hasSearchResult = hasSearchResult
+                self.searchList = searchList
+            }
+        }
+        struct ViewModel {
+            let data: SearchStatus
+        }
+        
+        enum SearchStatus {
+            case success([Countries])
+            case searchTextEmpty
+            case emptyList
+        }
+    }
 }
 
 struct Countries: Codable {
