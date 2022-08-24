@@ -5,6 +5,7 @@
 import UIKit
 
 protocol CountriesListViewControllerOutput: AnyObject {
+    func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel)
 }
 
 final class CountriesListViewController: UIViewController {
@@ -13,6 +14,8 @@ final class CountriesListViewController: UIViewController {
     
     var interactor: CountriesListInteractorOutput!
     var router: CountriesListRouterInput!
+
+    private let activityView = UIActivityIndicatorView(style: .large)
 
     // MARK: - Object lifecycle
 
@@ -37,6 +40,7 @@ final class CountriesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        getCountriesListFromFile()
     }
     
     // MARK: - SetupViews
@@ -44,6 +48,7 @@ final class CountriesListViewController: UIViewController {
     private func setupViews() {
         setupTableView()
         setupSearchBar()
+        setupActivityIndicator()
     }
     
     private func setupTableView() {
@@ -51,14 +56,27 @@ final class CountriesListViewController: UIViewController {
         tableView.register(nib, forCellReuseIdentifier: "countriescell")
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.isHidden = true
     }
     
     private func setupSearchBar() {
         
     }
+    
+    private func setupActivityIndicator() {
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        activityView.isHidden = true
+        view.addSubview(activityView)
+    }
 
     // MARK: - Event handling
 
+    private func getCountriesListFromFile() {
+        activityView.isHidden = false
+        interactor.getCountriesListFromFile(request: CountriesListModels.CountriesListFromFile.Request())
+    }
+    
     // MARK: - Actions
     
     // MARK: - Private func
@@ -67,7 +85,10 @@ final class CountriesListViewController: UIViewController {
 // MARK: - Display logic
 
 extension CountriesListViewController: CountriesListViewControllerOutput {
-    
+    func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel) {
+        activityView.isHidden = true
+        tableView.isHidden = false
+    }
 }
 
 // MARK: - Start Any Extensions

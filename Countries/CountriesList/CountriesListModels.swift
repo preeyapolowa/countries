@@ -5,15 +5,37 @@
 import UIKit
 
 struct CountriesListModels {
-    struct Request {
-        
+    enum CountriesListFromFile {
+        struct Request { }
+        struct Response { }
+        struct ViewModel { }
     }
+}
+
+struct Countries: Codable {
+    let country: String
+    let name: String
+    let _id: Int
+    let coord: LatLong
     
-    struct Response {
-        
+    init(country: String,
+         name: String,
+         _id: Int,
+         coord: LatLong) {
+        self.country = country
+        self.name = name
+        self._id = _id
+        self.coord = coord
     }
+}
+
+struct LatLong: Codable {
+    let lat: Double
+    let lon: Double
     
-    struct ViewModel {
-        
+    init(lat: Double,
+         lon: Double) {
+        self.lat = lat
+        self.lon = lon
     }
 }

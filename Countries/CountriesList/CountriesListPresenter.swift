@@ -5,6 +5,7 @@
 import UIKit
 
 protocol CountriesListPresenterOutput: AnyObject {
+    func presentCountriesListFromFile(response: CountriesListModels.CountriesListFromFile.Response)
 }
 
 final class CountriesListPresenter: CountriesListPresenterOutput {
@@ -12,4 +13,7 @@ final class CountriesListPresenter: CountriesListPresenterOutput {
 
     // MARK: - Presentation logic
 
+    func presentCountriesListFromFile(response: CountriesListModels.CountriesListFromFile.Response) {
+        viewController?.displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel())
+    }
 }

@@ -27,6 +27,7 @@
 		C772313728B687580021F015 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313628B687580021F015 /* Extension+UIColor.swift */; };
 		C772313A28B68B7F0021F015 /* RestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313928B68B7F0021F015 /* RestAPI.swift */; };
 		C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313B28B68BE70021F015 /* Extension+UIImageView.swift */; };
+		C772313E28B6A1E90021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		C772313628B687580021F015 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		C772313928B68B7F0021F015 /* RestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPI.swift; sourceTree = "<group>"; };
 		C772313B28B68BE70021F015 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
+		C772313D28B6A1E90021F015 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				C77230F128B66F600021F015 /* SceneDelegate.swift */,
 				C77230F828B66F610021F015 /* Assets.xcassets */,
 				C77230FA28B66F610021F015 /* LaunchScreen.storyboard */,
+				C772313D28B6A1E90021F015 /* cities.json */,
 				C77230FD28B66F610021F015 /* Info.plist */,
 			);
 			path = Countries;
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C77230FC28B66F610021F015 /* LaunchScreen.storyboard in Resources */,
+				C772313E28B6A1E90021F015 /* cities.json in Resources */,
 				C77230F928B66F610021F015 /* Assets.xcassets in Resources */,
 				C772313028B681990021F015 /* CountriesCell.xib in Resources */,
 				C772312B28B670F80021F015 /* CountriesList.storyboard in Resources */,
