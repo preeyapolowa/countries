@@ -16,17 +16,13 @@ class CountriesCell: UITableViewCell {
     @IBOutlet weak var latLongLabel: UILabel!
     
     private var urlImage = "https://countryflagsapi.com/png/"
+    private let imageLoader = ImageLoader()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        iconImage.image = nil
-    }
-    
+
     private func setupUI() {
         bgView.setCornerRadius()
         iconImage.setCornerRadius()
@@ -36,11 +32,12 @@ class CountriesCell: UITableViewCell {
     }
     
     func updateUI() {
-        urlImage = urlImage + "AU"
-        if let url = URL(string: urlImage) {
-            iconImage.downloadImage(from: url)
+        if let url = URL(string: "\(urlImage)AU") {
+            imageLoader.downloadImage(from: url) { image in
+                self.iconImage.image = image
+            }
         } else {
-            
+            iconImage.image = UIImage(named: "ic_world_flag_default")
         }
     }
 }

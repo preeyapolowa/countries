@@ -8,23 +8,29 @@
 import UIKit
 import Foundation
 
-extension UIImageView {
-    func downloadImage(from url: URL) {
+class ImageLoader {
+    static let shared = ImageLoader()
+    var oldImages: [URL: UIImage] = [:]
+
+    func downloadImage(from url: URL, completion: @escaping ((UIImage) -> Void)) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            if url.absoluteString.hasSuffix("svg") {
-                DispatchQueue.main.async { [weak self] in
-                    self?.image = UIImage(data: data)
+            if self.oldImages[url.absoluteURL] == UIImage(data: data) {
+                DispatchQueue.main.async {
+                    completion(self.oldImages[url.absoluteURL] ?? UIImage())
                 }
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    completion(UIImage(data: data) ?? UIImage())
                 }
             }
+            self.oldImages[url.absoluteURL] = UIImage(data: data)
         }
     }
 
     private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+        DispatchQueue.global(qos: .background).async {
+            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+        }
     }
 }
