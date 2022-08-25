@@ -7,6 +7,7 @@ import UIKit
 protocol CountriesListViewControllerOutput: AnyObject {
     func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel)
     func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel)
+    func displayDataLoadMore(viewModel: CountriesListModels.DataLoadMore.ViewModel)
 }
 
 final class CountriesListViewController: UIViewController {
@@ -26,6 +27,7 @@ final class CountriesListViewController: UIViewController {
     
     private let activityPageView = UIActivityIndicatorView(style: .large)
     private let activityContentView = UIActivityIndicatorView(style: .large)
+    private let loadMoreSpinner = UIActivityIndicatorView(style: .medium)
     private var loadingBgView: UIView!
     private var searchList: [Countries]?
     
@@ -71,6 +73,8 @@ final class CountriesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isHidden = true
+        loadMoreSpinner.startAnimating()
+        loadMoreSpinner.tintColor = .systemGray3
     }
     
     private func setupSearchBar() {
@@ -129,6 +133,7 @@ extension CountriesListViewController: CountriesListViewControllerOutput {
     
     func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel) {
         activityContentView.isHidden = true
+        tableView.setContentOffset(.zero, animated: false)
         switch viewModel.data {
         case .success(let searchList):
             self.searchList = searchList
@@ -140,6 +145,10 @@ extension CountriesListViewController: CountriesListViewControllerOutput {
         case .emptyList:
             emptyListLabel.isHidden = false
         }
+    }
+    
+    func displayDataLoadMore(viewModel: CountriesListModels.DataLoadMore.ViewModel) {
+        
     }
 }
 
@@ -170,7 +179,22 @@ extension CountriesListViewController: UITableViewDataSource {
 
 extension CountriesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        guard let data = searchList?[indexPath.row] else { return }
+        router.navigateToMaps(lat: data.coord.lat , lon: data.coord.lon)
+    }
+}
+
+extension CountriesListViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        let threshold = maximumOffset + 50
+        if currentOffset > threshold && interactor.canLoadMore {
+            tableView.tableFooterView = loadMoreSpinner
+            DispatchQueue.main.async {
+                
+            }
+        }
     }
 }
 

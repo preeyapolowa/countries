@@ -7,6 +7,7 @@ import UIKit
 protocol CountriesListPresenterOutput: AnyObject {
     func presentCountriesListFromFile(response: CountriesListModels.CountriesListFromFile.Response)
     func presentSearchCountry(response: CountriesListModels.SearchCountry.Response)
+    func presentDataLoadMore(response: CountriesListModels.DataLoadMore.Response)
 }
 
 final class CountriesListPresenter: CountriesListPresenterOutput {
@@ -28,5 +29,9 @@ final class CountriesListPresenter: CountriesListPresenterOutput {
             viewModel = CountriesListModels.SearchCountry.ViewModel(data: .emptyList)
         }
         viewController?.displaySearchCountry(viewModel: viewModel)
+    }
+    
+    func presentDataLoadMore(response: CountriesListModels.DataLoadMore.Response) {
+        
     }
 }

@@ -38,6 +38,12 @@ struct CountriesListModels {
             case emptyList
         }
     }
+    
+    enum DataLoadMore {
+        struct Request { }
+        struct Response { }
+        struct ViewModel { }
+    }
 }
 
 struct Countries: Codable {

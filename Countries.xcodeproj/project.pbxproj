@@ -27,6 +27,12 @@
 		C772313728B687580021F015 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313628B687580021F015 /* Extension+UIColor.swift */; };
 		C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313B28B68BE70021F015 /* Extension+UIImageView.swift */; };
 		C772313E28B6A1E90021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
+		C772314928B7BCEF0021F015 /* MapsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314428B7BCEF0021F015 /* MapsPresenter.swift */; };
+		C772314A28B7BCEF0021F015 /* MapsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314528B7BCEF0021F015 /* MapsRouter.swift */; };
+		C772314B28B7BCEF0021F015 /* MapsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314628B7BCEF0021F015 /* MapsModels.swift */; };
+		C772314C28B7BCEF0021F015 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314728B7BCEF0021F015 /* MapsViewController.swift */; };
+		C772314D28B7BCEF0021F015 /* MapsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314828B7BCEF0021F015 /* MapsInteractor.swift */; };
+		C772314F28B7BD620021F015 /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C772314E28B7BD620021F015 /* Maps.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +77,12 @@
 		C772313628B687580021F015 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		C772313B28B68BE70021F015 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		C772313D28B6A1E90021F015 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
+		C772314428B7BCEF0021F015 /* MapsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsPresenter.swift; sourceTree = "<group>"; };
+		C772314528B7BCEF0021F015 /* MapsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsRouter.swift; sourceTree = "<group>"; };
+		C772314628B7BCEF0021F015 /* MapsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsModels.swift; sourceTree = "<group>"; };
+		C772314728B7BCEF0021F015 /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
+		C772314828B7BCEF0021F015 /* MapsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsInteractor.swift; sourceTree = "<group>"; };
+		C772314E28B7BD620021F015 /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,9 +199,23 @@
 		C772314228B7A5230021F015 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C772314328B7BCE30021F015 /* Maps */,
 				C772311F28B670CC0021F015 /* CountriesList */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C772314328B7BCE30021F015 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				C772314428B7BCEF0021F015 /* MapsPresenter.swift */,
+				C772314528B7BCEF0021F015 /* MapsRouter.swift */,
+				C772314628B7BCEF0021F015 /* MapsModels.swift */,
+				C772314728B7BCEF0021F015 /* MapsViewController.swift */,
+				C772314828B7BCEF0021F015 /* MapsInteractor.swift */,
+				C772314E28B7BD620021F015 /* Maps.storyboard */,
+			);
+			path = Maps;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C77230FC28B66F610021F015 /* LaunchScreen.storyboard in Resources */,
+				C772314F28B7BD620021F015 /* Maps.storyboard in Resources */,
 				C772313E28B6A1E90021F015 /* cities.json in Resources */,
 				C77230F928B66F610021F015 /* Assets.xcassets in Resources */,
 				C772313028B681990021F015 /* CountriesCell.xib in Resources */,
@@ -328,10 +355,15 @@
 				C772312828B670ED0021F015 /* CountriesListViewController.swift in Sources */,
 				C772312628B670ED0021F015 /* CountriesListRouter.swift in Sources */,
 				C772313528B684310021F015 /* Extension+UIView.swift in Sources */,
+				C772314C28B7BCEF0021F015 /* MapsViewController.swift in Sources */,
 				C772312E28B681900021F015 /* CountriesCell.swift in Sources */,
+				C772314928B7BCEF0021F015 /* MapsPresenter.swift in Sources */,
+				C772314A28B7BCEF0021F015 /* MapsRouter.swift in Sources */,
 				C772312928B670ED0021F015 /* CountriesListInteractor.swift in Sources */,
 				C772312728B670ED0021F015 /* CountriesListModels.swift in Sources */,
+				C772314D28B7BCEF0021F015 /* MapsInteractor.swift in Sources */,
 				C772313328B683F40021F015 /* Extension+String.swift in Sources */,
+				C772314B28B7BCEF0021F015 /* MapsModels.swift in Sources */,
 				C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */,
 				C77230F028B66F600021F015 /* AppDelegate.swift in Sources */,
 				C77230F228B66F600021F015 /* SceneDelegate.swift in Sources */,
