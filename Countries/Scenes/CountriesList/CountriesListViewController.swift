@@ -132,23 +132,29 @@ extension CountriesListViewController: CountriesListViewControllerOutput {
     }
     
     func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel) {
-        activityContentView.isHidden = true
-        tableView.setContentOffset(.zero, animated: false)
-        switch viewModel.data {
-        case .success(let searchList):
-            self.searchList = searchList
-            tableView.reloadData()
-            tableView.isHidden = false
-        case .searchTextEmpty:
-            emptyListLabel.isHidden = true
-            tableView.isHidden = true
-        case .emptyList:
-            emptyListLabel.isHidden = false
+        DispatchQueue.main.async {
+            self.activityContentView.isHidden = true
+            self.tableView.setContentOffset(.zero, animated: false)
+            switch viewModel.data {
+            case .success(let searchList):
+                self.searchList = searchList
+                self.tableView.reloadData()
+                self.tableView.isHidden = false
+            case .searchTextEmpty:
+                self.emptyListLabel.isHidden = true
+                self.tableView.isHidden = true
+            case .emptyList:
+                self.emptyListLabel.isHidden = false
+            }
         }
     }
     
     func displayDataLoadMore(viewModel: CountriesListModels.DataLoadMore.ViewModel) {
-        
+        DispatchQueue.main.async {
+            self.tableView.tableFooterView = nil
+            self.searchList = viewModel.loadMoreItems
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -188,12 +194,10 @@ extension CountriesListViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let threshold = maximumOffset + 50
+        let threshold = maximumOffset - 50
         if currentOffset > threshold && interactor.canLoadMore {
             tableView.tableFooterView = loadMoreSpinner
-            DispatchQueue.main.async {
-                
-            }
+            interactor.getDataLoadMore(request: CountriesListModels.DataLoadMore.Request())
         }
     }
 }
@@ -210,7 +214,6 @@ extension CountriesListViewController: UISearchBarDelegate {
             emptyListLabel.isHidden = true
         }
     }
-
 
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text != "\n" {

@@ -17,9 +17,11 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
     // MARK: - Business logic
     var countriesList: [Countries]?
     var searchResult: [Countries]?
+    var displayItemsList: [Countries] = []
     var startIndex = 0
     var countItems = 10
     var canLoadMore = false
+    var isLoadMore = false
     
     func getCountriesListFromFile(request: CountriesListModels.CountriesListFromFile.Request) {
         DispatchQueue.global(qos: .background).async {
@@ -40,6 +42,7 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
     func searchCountry(request: CountriesListModels.SearchCountry.Request) {
         // Reset
         searchResult = []
+        displayItemsList = []
         startIndex = 0
         countItems = 10
         canLoadMore = false
@@ -51,7 +54,6 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
             return
         }
 
-        var displayItemsList: [Countries] = []
         DispatchQueue.global(qos: .background).async {
             if request.keyword.count > 2 {
                 self.searchResult = countriesList.filter {
@@ -75,25 +77,37 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
             if let result = self.searchResult, !result.isEmpty {
                 self.canLoadMore = result.count >= self.countItems
                 self.countItems = result.count >= self.countItems ? self.countItems : result.count
-                for index in self.startIndex...self.countItems {
-                    displayItemsList.append(result[index])
+                for index in self.startIndex...self.countItems - 1 {
+                    self.displayItemsList.append(result[index])
                 }
             }
             
-            DispatchQueue.main.async {
-                let response: Response
-                if !displayItemsList.isEmpty {
-                    response = Response(hasSearchResult: true, searchList: displayItemsList)
-                    self.presenter.presentSearchCountry(response: response)
-                } else {
-                    response = Response(hasSearchResult: false, searchList: [])
-                    self.presenter.presentSearchCountry(response: response)
-                }
+            let response: Response
+            if !self.displayItemsList.isEmpty {
+                response = Response(hasSearchResult: true, searchList: self.displayItemsList)
+                self.presenter.presentSearchCountry(response: response)
+            } else {
+                response = Response(hasSearchResult: false, searchList: [])
+                self.presenter.presentSearchCountry(response: response)
             }
         }
     }
     
     func getDataLoadMore(request: CountriesListModels.DataLoadMore.Request) {
-        
+        startIndex = countItems
+        countItems = countItems + 10
+        typealias Response = CountriesListModels.DataLoadMore.Response
+        if let result = self.searchResult {
+            self.canLoadMore = result.count >= self.countItems
+            DispatchQueue.global(qos: .background).async {
+                self.countItems = result.count >= self.countItems ? self.countItems : result.count
+                for index in self.startIndex...self.countItems - 1 {
+                    self.displayItemsList.append(result[index])
+                }
+                
+                let response = Response(loadMoreItems: self.displayItemsList)
+                self.presenter.presentDataLoadMore(response: response)
+            }
+        }
     }
 }

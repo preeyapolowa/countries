@@ -41,8 +41,12 @@ struct CountriesListModels {
     
     enum DataLoadMore {
         struct Request { }
-        struct Response { }
-        struct ViewModel { }
+        struct Response {
+            let loadMoreItems: [Countries]
+        }
+        struct ViewModel {
+            let loadMoreItems: [Countries]
+        }
     }
 }
 

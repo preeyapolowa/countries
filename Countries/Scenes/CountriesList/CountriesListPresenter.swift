@@ -32,6 +32,7 @@ final class CountriesListPresenter: CountriesListPresenterOutput {
     }
     
     func presentDataLoadMore(response: CountriesListModels.DataLoadMore.Response) {
-        
+        let viewModel = CountriesListModels.DataLoadMore.ViewModel(loadMoreItems: response.loadMoreItems)
+        viewController?.displayDataLoadMore(viewModel: viewModel)
     }
 }
