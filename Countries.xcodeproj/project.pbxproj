@@ -34,6 +34,7 @@
 		C772314D28B7BCEF0021F015 /* MapsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314828B7BCEF0021F015 /* MapsInteractor.swift */; };
 		C772314F28B7BD620021F015 /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C772314E28B7BD620021F015 /* Maps.storyboard */; };
 		C772315228B7DD350021F015 /* CountriesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772315128B7DD350021F015 /* CountriesListPresenterTests.swift */; };
+		C772315328B7E6D30021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -346,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C772315328B7E6D30021F015 /* cities.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

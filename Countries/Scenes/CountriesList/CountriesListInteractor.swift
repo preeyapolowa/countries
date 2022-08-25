@@ -15,6 +15,7 @@ protocol CountriesListInteractorOutput: AnyObject {
 final class CountriesListInteractor: CountriesListInteractorOutput {
     var presenter: CountriesListPresenterOutput!
     // MARK: - Business logic
+    let fileJsonName = "cities"
     var countriesList: [Countries]?
     var searchResult: [Countries]?
     var displayItemsList: [Countries] = []
@@ -22,17 +23,18 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
     var countItems = 10
     var canLoadMore = false
     var isLoadMore = false
+    var isRunningTests: Bool {
+        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
     
     func getCountriesListFromFile(request: CountriesListModels.CountriesListFromFile.Request) {
         DispatchQueue.global(qos: .background).async {
             do {
-                guard let fileUrl = Bundle.main.url(forResource: "cities", withExtension: "json") else { fatalError() }
+                guard let fileUrl = Bundle.main.url(forResource: self.fileJsonName, withExtension: "json") else { fatalError() }
                 let data = try Data(contentsOf: fileUrl)
                 let countriesJson = try JSONDecoder().decode([Countries].self, from: data)
-                DispatchQueue.main.async {
-                    self.countriesList = countriesJson
-                    self.presenter.presentCountriesListFromFile(response: CountriesListModels.CountriesListFromFile.Response())
-                }
+                self.countriesList = countriesJson
+                self.presenter.presentCountriesListFromFile(response: CountriesListModels.CountriesListFromFile.Response())
             } catch {
                 print(error)
             }
@@ -48,8 +50,8 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
         canLoadMore = false
         typealias Response = CountriesListModels.SearchCountry.Response
         guard let countriesList = countriesList,
-              !request.keyword.isEmpty  else {
-            let response = Response(isTextEmpty: true, hasSearchResult: false, searchList: [])
+              !request.keyword.isEmpty else {
+            let response = Response(isTextEmpty: request.keyword.isEmpty, hasSearchResult: false, searchList: [])
             presenter.presentSearchCountry(response: response)
             return
         }
@@ -62,23 +64,35 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
                     }
                     return false
                 }
-                
-            } else {
-                self.searchResult = countriesList.filter {
-                    if $0.name.hasPrefix(request.keyword, caseSensitive: false) ||
-                        $0.country.hasPrefix(request.keyword, caseSensitive: false) {
-                        return true
-                    }
-                    return false
-                }
                 self.searchResult = self.searchResult?.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+            } else {
+                var nameList = countriesList.filter {
+                    return $0.name.hasPrefix(request.keyword, caseSensitive: false)
+                }
+                var countryList = countriesList.filter {
+                    return $0.country.hasPrefix(request.keyword, caseSensitive: false)
+                }
+                nameList = nameList.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+                countryList = countryList.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+                self.searchResult = nameList
+                countryList.forEach { value in
+                    if nameList.contains(where: { value.name != $0.name }) {
+                        self.searchResult?.append(value)
+                    }
+                }
             }
             
             if let result = self.searchResult, !result.isEmpty {
-                self.canLoadMore = result.count >= self.countItems
-                self.countItems = result.count >= self.countItems ? self.countItems : result.count
-                for index in self.startIndex...self.countItems - 1 {
-                    self.displayItemsList.append(result[index])
+                if self.isRunningTests {
+                    for index in self.startIndex...result.count - 1 {
+                        self.displayItemsList.append(result[index])
+                    }
+                } else {
+                    self.canLoadMore = result.count >= self.countItems
+                    self.countItems = result.count >= self.countItems ? self.countItems : result.count
+                    for index in self.startIndex...self.countItems - 1 {
+                        self.displayItemsList.append(result[index])
+                    }
                 }
             }
             

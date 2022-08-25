@@ -128,7 +128,9 @@ final class CountriesListViewController: UIViewController {
 
 extension CountriesListViewController: CountriesListViewControllerOutput {
     func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel) {
-        loadingBgView.isHidden = true
+        DispatchQueue.main.async {
+            self.loadingBgView.isHidden = true
+        }
     }
     
     func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel) {
@@ -194,7 +196,7 @@ extension CountriesListViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let threshold = maximumOffset - 50
+        let threshold = maximumOffset - 120
         if currentOffset > threshold && interactor.canLoadMore {
             tableView.tableFooterView = loadMoreSpinner
             interactor.getDataLoadMore(request: CountriesListModels.DataLoadMore.Request())
