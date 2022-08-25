@@ -29,6 +29,11 @@ class CountriesCell: UITableViewCell {
         super.awakeFromNib()
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconImage.image = nil
+    }
 
     private func setupUI() {
         bgView.setCornerRadius()
@@ -43,7 +48,9 @@ class CountriesCell: UITableViewCell {
         latLongLabel.text = "\(model.lat), \(model.long)"
         if let url = URL(string: "\(urlImage)\(model.country)") {
             imageLoader.downloadImage(from: url) { image in
-                self.iconImage.image = image
+                DispatchQueue.main.async {
+                    self.iconImage.image = image
+                }
             }
         } else {
             iconImage.image = UIImage(named: "ic_world_flag_default")

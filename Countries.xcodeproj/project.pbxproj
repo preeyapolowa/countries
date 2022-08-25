@@ -122,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				C772313128B683E40021F015 /* Extensions */,
-				C772311F28B670CC0021F015 /* CountriesList */,
+				C772314228B7A5230021F015 /* Scenes */,
 				C77230EF28B66F600021F015 /* AppDelegate.swift */,
 				C77230F128B66F600021F015 /* SceneDelegate.swift */,
 				C77230F828B66F610021F015 /* Assets.xcassets */,
@@ -182,6 +182,14 @@
 				C772313B28B68BE70021F015 /* Extension+UIImageView.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C772314228B7A5230021F015 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C772311F28B670CC0021F015 /* CountriesList */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

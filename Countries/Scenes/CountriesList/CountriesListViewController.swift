@@ -175,13 +175,27 @@ extension CountriesListViewController: UITableViewDelegate {
 }
 
 extension CountriesListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            activityContentView.isHidden = true
+            tableView.isHidden = true
+            emptyListLabel.isHidden = true
+        }
+    }
+
+
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        activityContentView.isHidden = false
-        tableView.isHidden = true
-        emptyListLabel.isHidden = true
-        
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchCountry), object: nil)
-        perform(#selector(handleSearchCountry), with: nil, afterDelay: 0.5)
+        if text != "\n" {
+            activityContentView.isHidden = false
+            tableView.isHidden = true
+            emptyListLabel.isHidden = true
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchCountry), object: nil)
+            perform(#selector(handleSearchCountry), with: nil, afterDelay: 0.5)
+        }
         return true
     }
     

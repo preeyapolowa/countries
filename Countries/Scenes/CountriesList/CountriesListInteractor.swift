@@ -38,7 +38,7 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
             return
         }
         
-        let searchResult: [Countries]
+        var searchResult: [Countries]?
         if request.keyword.count > 2 {
             searchResult = countriesList.filter {
                 if $0.name.hasPrefix(request.keyword, caseSensitive: false) {
@@ -48,20 +48,21 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
             }
         } else {
             searchResult = countriesList.filter {
-                if $0.name.hasPrefix(request.keyword, caseSensitive: false) &&
+                if $0.name.hasPrefix(request.keyword, caseSensitive: false) ||
                     $0.country.hasPrefix(request.keyword, caseSensitive: false) {
                     return true
                 }
                 return false
             }
+            searchResult = searchResult?.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         }
         
         let response: CountriesListModels.SearchCountry.Response
-        if searchResult.isEmpty {
-            response = CountriesListModels.SearchCountry.Response(hasSearchResult: false, searchList: [])
+        if let result = searchResult, !result.isEmpty {
+            response = CountriesListModels.SearchCountry.Response(hasSearchResult: true, searchList: result)
             presenter.presentSearchCountry(response: response)
         } else {
-            response = CountriesListModels.SearchCountry.Response(hasSearchResult: true, searchList: searchResult)
+            response = CountriesListModels.SearchCountry.Response(hasSearchResult: false, searchList: [])
             presenter.presentSearchCountry(response: response)
         }
     }
