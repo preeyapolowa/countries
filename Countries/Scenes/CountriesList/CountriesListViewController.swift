@@ -223,7 +223,7 @@ extension CountriesListViewController: UISearchBarDelegate {
             tableView.isHidden = true
             emptyListLabel.isHidden = true
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchCountry), object: nil)
-            perform(#selector(handleSearchCountry), with: nil, afterDelay: 0.5)
+            perform(#selector(handleSearchCountry), with: nil, afterDelay: 1)
         }
         return true
     }

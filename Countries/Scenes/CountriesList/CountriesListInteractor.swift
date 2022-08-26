@@ -23,6 +23,9 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
     var countItems = 10
     var canLoadMore = false
     var isLoadMore = false
+    
+    // Unit Tests
+    var loadMoreTests = false
     var isRunningTests: Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
@@ -84,8 +87,16 @@ final class CountriesListInteractor: CountriesListInteractorOutput {
             
             if let result = self.searchResult, !result.isEmpty {
                 if self.isRunningTests {
-                    for index in self.startIndex...result.count - 1 {
-                        self.displayItemsList.append(result[index])
+                    if self.loadMoreTests {
+                        self.canLoadMore = result.count >= self.countItems
+                        self.countItems = result.count >= self.countItems ? self.countItems : result.count
+                        for index in self.startIndex...self.countItems - 1 {
+                            self.displayItemsList.append(result[index])
+                        }
+                    } else {
+                        for index in self.startIndex...result.count - 1 {
+                            self.displayItemsList.append(result[index])
+                        }
                     }
                 } else {
                     self.canLoadMore = result.count >= self.countItems

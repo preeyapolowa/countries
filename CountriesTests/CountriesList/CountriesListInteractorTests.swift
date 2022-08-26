@@ -141,10 +141,86 @@ class CountriesListInteractorTests: XCTestCase {
             XCTFail("Response is nil")
         }
     }
+    
+    func testSearchCountryWithInValidName() {
+        // Given
+        let keyword = "ฟฟหกกadsadqwwqe"
+        let request = CountriesListModels.CountriesListFromFile.Request()
+        let searchCountryRequest = CountriesListModels.SearchCountry.Request(keyword: keyword)
+        interactor.getCountriesListFromFile(request: request)
+        
+        // When
+        expectToEventually(presenterSpy.presentCountriesListFromFileCalled)
+        interactor.searchCountry(request: searchCountryRequest)
+        expectToEventually(presenterSpy.presentSearchCountryCalled)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentSearchCountryCalled)
+        if let response = presenterSpy.presentSearchCountryResponse {
+            XCTAssertFalse(response.hasSearchResult)
+            XCTAssertFalse(response.isTextEmpty)
+            XCTAssertEqual(response.searchList.count, 0)
+        } else {
+            XCTFail("Response is nil")
+        }
+    }
+
+    // MARK: getLoadMore Tests
+    
+    func testGetLoadMore() {
+        // Given
+        interactor.loadMoreTests = true
+        let keyword = "AU"
+        let request = CountriesListModels.CountriesListFromFile.Request()
+        let searchCountryRequest = CountriesListModels.SearchCountry.Request(keyword: keyword)
+        let loadMoreRequest = CountriesListModels.DataLoadMore.Request()
+        interactor.getCountriesListFromFile(request: request)
+        expectToEventually(presenterSpy.presentCountriesListFromFileCalled)
+        interactor.searchCountry(request: searchCountryRequest)
+        expectToEventually(presenterSpy.presentSearchCountryCalled)
+        
+        // When
+        interactor.getDataLoadMore(request: loadMoreRequest)
+        expectToEventually(presenterSpy.presentDataLoadMoreCalled)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentDataLoadMoreCalled)
+        if let response = presenterSpy.presentDataLoadMoreResponse {
+            XCTAssertEqual(response.loadMoreItems.count, 20)
+        } else {
+            XCTFail("Response is nil")
+        }
+    }
+    
+    func testGetLoadMoreLastItems() {
+        // Given
+        interactor.loadMoreTests = true
+        let keyword = "Abl"
+        let request = CountriesListModels.CountriesListFromFile.Request()
+        let searchCountryRequest = CountriesListModels.SearchCountry.Request(keyword: keyword)
+        let loadMoreRequest = CountriesListModels.DataLoadMore.Request()
+        interactor.getCountriesListFromFile(request: request)
+        expectToEventually(presenterSpy.presentCountriesListFromFileCalled)
+        interactor.searchCountry(request: searchCountryRequest)
+        expectToEventually(presenterSpy.presentSearchCountryCalled)
+        
+        // When
+        interactor.getDataLoadMore(request: loadMoreRequest)
+        expectToEventually(presenterSpy.presentDataLoadMoreCalled)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentDataLoadMoreCalled)
+        if let response = presenterSpy.presentDataLoadMoreResponse {
+            XCTAssertEqual(response.loadMoreItems.count, 13)
+            XCTAssertEqual(interactor.countItems, response.loadMoreItems.count)
+        } else {
+            XCTFail("Response is nil")
+        }
+    }
 }
 
 extension XCTest {
-    func expectToEventually(_ test: @autoclosure () -> Bool, timeout: TimeInterval = 30, message: String = "") {
+    func expectToEventually(_ test: @autoclosure () -> Bool, timeout: TimeInterval = 60, message: String = "") {
         let runLoop = RunLoop.current
         let timeoutDate = Date(timeIntervalSinceNow: timeout)
         repeat {
