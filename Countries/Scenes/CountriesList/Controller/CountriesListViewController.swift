@@ -3,12 +3,7 @@
 //  Countries
 
 import UIKit
-
-protocol CountriesListViewControllerOutput: AnyObject {
-    func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel)
-    func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel)
-    func displayDataLoadMore(viewModel: CountriesListModels.DataLoadMore.ViewModel)
-}
+import RxSwift
 
 final class CountriesListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -22,8 +17,8 @@ final class CountriesListViewController: UIViewController {
         return label
     }()
     
-    var interactor: CountriesListInteractorOutput!
-    var router: CountriesListRouterInput!
+    var viewModel = CountriesListViewModel()
+    var disposeBag = DisposeBag()
     
     private let activityPageView = UIActivityIndicatorView(style: .large)
     private let activityContentView = UIActivityIndicatorView(style: .large)
@@ -31,30 +26,13 @@ final class CountriesListViewController: UIViewController {
     private var loadingBgView: UIView!
     private var searchList: [Countries]?
     
-    // MARK: - Object lifecycle
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        let router = CountriesListRouter()
-        router.viewController = self
-        
-        let presenter = CountriesListPresenter()
-        presenter.viewController = self
-        
-        let interactor = CountriesListInteractor()
-        interactor.presenter = presenter
-        
-        self.interactor = interactor
-        self.router = router
-    }
-    
     // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         setupViews()
-        getCountriesListFromFile()
+        viewModel.output.getCountriesListFromFile()
     }
     
     // MARK: - SetupViews
@@ -107,57 +85,8 @@ final class CountriesListViewController: UIViewController {
         emptyListLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    // MARK: - Event handling
-    
-    private func getCountriesListFromFile() {
-        loadingBgView.isHidden = false
-        interactor.getCountriesListFromFile(request: CountriesListModels.CountriesListFromFile.Request())
-    }
-    
-    private func searchCountry(keyword: String) {
-        let request = CountriesListModels.SearchCountry.Request(keyword: keyword)
-        interactor.searchCountry(request: request)
-    }
-    
     // MARK: - Actions
     
-    // MARK: - Private func
-}
-
-// MARK: - Display logic
-
-extension CountriesListViewController: CountriesListViewControllerOutput {
-    func displayCountriesListFromFile(viewModel: CountriesListModels.CountriesListFromFile.ViewModel) {
-        DispatchQueue.main.async {
-            self.loadingBgView.isHidden = true
-        }
-    }
-    
-    func displaySearchCountry(viewModel: CountriesListModels.SearchCountry.ViewModel) {
-        DispatchQueue.main.async {
-            self.activityContentView.isHidden = true
-            self.tableView.setContentOffset(.zero, animated: false)
-            switch viewModel.data {
-            case .success(let searchList):
-                self.searchList = searchList
-                self.tableView.reloadData()
-                self.tableView.isHidden = false
-            case .searchTextEmpty:
-                self.emptyListLabel.isHidden = true
-                self.tableView.isHidden = true
-            case .emptyList:
-                self.emptyListLabel.isHidden = false
-            }
-        }
-    }
-    
-    func displayDataLoadMore(viewModel: CountriesListModels.DataLoadMore.ViewModel) {
-        DispatchQueue.main.async {
-            self.tableView.tableFooterView = nil
-            self.searchList = viewModel.loadMoreItems
-            self.tableView.reloadData()
-        }
-    }
 }
 
 // MARK: - Start Any Extensions
@@ -188,7 +117,7 @@ extension CountriesListViewController: UITableViewDataSource {
 extension CountriesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let data = searchList?[indexPath.row] else { return }
-        router.navigateToMaps(lat: data.coord.lat , lon: data.coord.lon)
+        navigateToMaps(lat: data.coord.lat , lon: data.coord.lon)
     }
 }
 
@@ -197,9 +126,9 @@ extension CountriesListViewController: UIScrollViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         let threshold = maximumOffset - 120
-        if currentOffset > threshold && interactor.canLoadMore {
+        if currentOffset > threshold && viewModel.output.getCanLoadMore() {
             tableView.tableFooterView = loadMoreSpinner
-            interactor.getDataLoadMore(request: CountriesListModels.DataLoadMore.Request())
+            viewModel.output.loadMoreCountries()
         }
     }
 }
@@ -216,7 +145,7 @@ extension CountriesListViewController: UISearchBarDelegate {
             emptyListLabel.isHidden = true
         }
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text != "\n" {
             activityContentView.isHidden = false
@@ -228,7 +157,97 @@ extension CountriesListViewController: UISearchBarDelegate {
         return true
     }
     
-    @objc private func handleSearchCountry(keyword: String) {
-        searchCountry(keyword: searchBar.text ?? "")
+    @objc private func handleSearchCountry() {
+        viewModel.input.searchCountry(keyword: searchBar.text ?? "")
+    }
+}
+
+extension CountriesListViewController {
+    func navigateToMaps(lat: Double, lon: Double) {
+        guard let vc = MapsRouter().createVC() as? MapsViewController else { return }
+        vc.interactor.lat = lat
+        vc.interactor.lon = lon
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+}
+
+extension CountriesListViewController {
+    private func bindViewModel() {
+        showLoading()
+        hideLoading()
+        didKeywordEmpty()
+        didSearchCountrySuccess()
+        didSearchCountryEmpty()
+        didLoadMoreCountriesSuccess()
+    }
+    
+    private func showLoading() {
+        self.viewModel
+            .output
+            .showLoading
+            .subscribe(onNext: {
+                DispatchQueue.main.async {
+                    self.loadingBgView.isHidden = false
+                }
+            }, onDisposed: nil).disposed(by: self.disposeBag)
+    }
+    
+    private func hideLoading() {
+        self.viewModel
+            .output
+            .hideLoading
+            .subscribe(onNext: {
+                DispatchQueue.main.async {
+                    self.loadingBgView.isHidden = true
+                }
+            }, onDisposed: nil).disposed(by: self.disposeBag)
+    }
+    
+    private func didKeywordEmpty() {
+        self.viewModel
+            .output
+            .didKeywordEmpty
+            .subscribe(onNext: {
+                self.emptyListLabel.isHidden = true
+                self.tableView.isHidden = true
+            }, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    private func didSearchCountrySuccess() {
+        self.viewModel
+            .output
+            .didSearchCountrySuccess
+            .subscribe(onNext: { coutries in
+                DispatchQueue.main.async {
+                    self.activityContentView.isHidden = true
+                    self.tableView.setContentOffset(.zero, animated: false)
+                    self.searchList = coutries.searchList
+                    self.tableView.reloadData()
+                    self.tableView.isHidden = false
+                }
+            }, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    private func didSearchCountryEmpty() {
+        self.viewModel
+            .output
+            .didSearchCountryEmpty
+            .subscribe(onNext: {
+                self.emptyListLabel.isHidden = false
+            }, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    private func didLoadMoreCountriesSuccess() {
+        self.viewModel
+            .output
+            .didLoadMoreCountriesSuccess
+            .subscribe(onNext: { coutries in
+                DispatchQueue.main.async {
+                    self.tableView.tableFooterView = nil
+                    self.searchList = coutries
+                    self.tableView.reloadData()
+                }
+            }, onDisposed: nil).disposed(by: disposeBag)
     }
 }
