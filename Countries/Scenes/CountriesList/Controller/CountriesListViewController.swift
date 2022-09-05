@@ -164,9 +164,10 @@ extension CountriesListViewController: UISearchBarDelegate {
 
 extension CountriesListViewController {
     func navigateToMaps(lat: Double, lon: Double) {
-        guard let vc = MapsRouter().createVC() as? MapsViewController else { return }
-        vc.interactor.lat = lat
-        vc.interactor.lon = lon
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Maps", bundle: nil)
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "MapsViewController") as? MapsViewController else { return }
+        let viewModel = MapsViewModel(lat: lat, lon: lon)
+        vc.config(viewModel: viewModel)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

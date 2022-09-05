@@ -11,6 +11,7 @@
 		75A15EA4EC9D65D8A2B406D9 /* Pods_Countries_CountriesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FE7C2DA86A747A27D8F6C34 /* Pods_Countries_CountriesUITests.framework */; };
 		8B4F7B16D2CDBBB77EA34573 /* Pods_Countries.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DFFD296B5372A00C48BAF8 /* Pods_Countries.framework */; };
 		C73FE66B28C64AC800F1AB06 /* CountriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FE66A28C64AC800F1AB06 /* CountriesListViewModel.swift */; };
+		C73FE67028C65B7A00F1AB06 /* MapsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FE66F28C65B7A00F1AB06 /* MapsViewModel.swift */; };
 		C77230F028B66F600021F015 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77230EF28B66F600021F015 /* AppDelegate.swift */; };
 		C77230F228B66F600021F015 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77230F128B66F600021F015 /* SceneDelegate.swift */; };
 		C77230F928B66F610021F015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C77230F828B66F610021F015 /* Assets.xcassets */; };
@@ -28,11 +29,7 @@
 		C772313728B687580021F015 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313628B687580021F015 /* Extension+UIColor.swift */; };
 		C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772313B28B68BE70021F015 /* Extension+UIImageView.swift */; };
 		C772313E28B6A1E90021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
-		C772314928B7BCEF0021F015 /* MapsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314428B7BCEF0021F015 /* MapsPresenter.swift */; };
-		C772314A28B7BCEF0021F015 /* MapsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314528B7BCEF0021F015 /* MapsRouter.swift */; };
-		C772314B28B7BCEF0021F015 /* MapsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314628B7BCEF0021F015 /* MapsModels.swift */; };
 		C772314C28B7BCEF0021F015 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314728B7BCEF0021F015 /* MapsViewController.swift */; };
-		C772314D28B7BCEF0021F015 /* MapsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772314828B7BCEF0021F015 /* MapsInteractor.swift */; };
 		C772314F28B7BD620021F015 /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C772314E28B7BD620021F015 /* Maps.storyboard */; };
 		C772315228B7DD350021F015 /* CountriesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C772315128B7DD350021F015 /* CountriesListPresenterTests.swift */; };
 		C772315328B7E6D30021F015 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = C772313D28B6A1E90021F015 /* cities.json */; };
@@ -64,6 +61,7 @@
 		7FBEABAC9B85346B4E095813 /* Pods-Countries.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Countries.release.xcconfig"; path = "Target Support Files/Pods-Countries/Pods-Countries.release.xcconfig"; sourceTree = "<group>"; };
 		B7B75CD8FF87B74B94CD1106 /* Pods-CountriesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountriesTests.release.xcconfig"; path = "Target Support Files/Pods-CountriesTests/Pods-CountriesTests.release.xcconfig"; sourceTree = "<group>"; };
 		C73FE66A28C64AC800F1AB06 /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
+		C73FE66F28C65B7A00F1AB06 /* MapsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel.swift; sourceTree = "<group>"; };
 		C77230EC28B66F600021F015 /* Countries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Countries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77230EF28B66F600021F015 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C77230F128B66F600021F015 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,11 +83,7 @@
 		C772313628B687580021F015 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		C772313B28B68BE70021F015 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		C772313D28B6A1E90021F015 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
-		C772314428B7BCEF0021F015 /* MapsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsPresenter.swift; sourceTree = "<group>"; };
-		C772314528B7BCEF0021F015 /* MapsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsRouter.swift; sourceTree = "<group>"; };
-		C772314628B7BCEF0021F015 /* MapsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsModels.swift; sourceTree = "<group>"; };
 		C772314728B7BCEF0021F015 /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
-		C772314828B7BCEF0021F015 /* MapsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsInteractor.swift; sourceTree = "<group>"; };
 		C772314E28B7BD620021F015 /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
 		C772315128B7DD350021F015 /* CountriesListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListPresenterTests.swift; sourceTree = "<group>"; };
 		C7DB04EF89E1E9C71BE4F488 /* Pods_CountriesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CountriesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +165,30 @@
 				C73FE66A28C64AC800F1AB06 /* CountriesListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C73FE66C28C65AF600F1AB06 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C73FE66F28C65B7A00F1AB06 /* MapsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C73FE66D28C65AFC00F1AB06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C772314E28B7BD620021F015 /* Maps.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C73FE66E28C65B0000F1AB06 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C772314728B7BCEF0021F015 /* MapsViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		C77230E328B66F600021F015 = {
@@ -269,12 +287,9 @@
 		C772314328B7BCE30021F015 /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				C772314428B7BCEF0021F015 /* MapsPresenter.swift */,
-				C772314528B7BCEF0021F015 /* MapsRouter.swift */,
-				C772314628B7BCEF0021F015 /* MapsModels.swift */,
-				C772314728B7BCEF0021F015 /* MapsViewController.swift */,
-				C772314828B7BCEF0021F015 /* MapsInteractor.swift */,
-				C772314E28B7BD620021F015 /* Maps.storyboard */,
+				C73FE66C28C65AF600F1AB06 /* ViewModel */,
+				C73FE66E28C65B0000F1AB06 /* Controller */,
+				C73FE66D28C65AFC00F1AB06 /* View */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -552,14 +567,11 @@
 				C772312828B670ED0021F015 /* CountriesListViewController.swift in Sources */,
 				C772313528B684310021F015 /* Extension+UIView.swift in Sources */,
 				C73FE66B28C64AC800F1AB06 /* CountriesListViewModel.swift in Sources */,
+				C73FE67028C65B7A00F1AB06 /* MapsViewModel.swift in Sources */,
 				C772314C28B7BCEF0021F015 /* MapsViewController.swift in Sources */,
 				C772312E28B681900021F015 /* CountriesCell.swift in Sources */,
-				C772314928B7BCEF0021F015 /* MapsPresenter.swift in Sources */,
-				C772314A28B7BCEF0021F015 /* MapsRouter.swift in Sources */,
 				C772312728B670ED0021F015 /* CountriesListModels.swift in Sources */,
-				C772314D28B7BCEF0021F015 /* MapsInteractor.swift in Sources */,
 				C772313328B683F40021F015 /* Extension+String.swift in Sources */,
-				C772314B28B7BCEF0021F015 /* MapsModels.swift in Sources */,
 				C772313C28B68BE70021F015 /* Extension+UIImageView.swift in Sources */,
 				C77230F028B66F600021F015 /* AppDelegate.swift in Sources */,
 				C77230F228B66F600021F015 /* SceneDelegate.swift in Sources */,
