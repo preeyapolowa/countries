@@ -44,14 +44,14 @@ class CountriesListViewModel: CountriesListProtocol {
     var didLoadMoreCountriesSuccess: PublishSubject<[Countries]> = PublishSubject<[Countries]>()
     
     // Properties
-    private let fileJsonName = "cities"
-    private var countriesList: [Countries]?
-    private var searchResult: [Countries]?
-    private var displayItemsList: [Countries] = []
-    private var startIndex = 0
-    private var countItems = 10
-    private var canLoadMore = false
-    private var isLoadMore = false
+    let fileJsonName = "cities"
+    var countriesList: [Countries]?
+    var searchResult: [Countries]?
+    var displayItemsList: [Countries] = []
+    var startIndex = 0
+    var countItems = 10
+    var canLoadMore = false
+    var isLoadMore = false
     
     // Unit Tests
     var loadMoreTests = false
