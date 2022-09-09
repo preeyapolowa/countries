@@ -1,6 +1,7 @@
-# Countries
+# Countries Application
+get more than 200k countries list from json file, search countries list, display countries list, and display the coutry location.
 
-To run project
+# To run project
 - clone project
 - try to build the project
 if you cannot build application, please run "pod install" in the root project folder, then try again.
