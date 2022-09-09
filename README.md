@@ -3,8 +3,7 @@ get more than 200k countries list from json file, search countries list, display
 
 # To run project
 - clone project
-- try to build the project
-if you cannot build application, please run "pod install" in the root project folder, then try again.
+- try to build the project at first, if you cannot build application, please run "pod install" in the root project folder, then try again.
 
 # Design Pattern
 - Clean Swift at first
